@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <title>Tarjeta para el Día de las Madres</title>
     <style>
         body {
@@ -16,14 +16,14 @@
             font-family: 'Arial', sans-serif;
             overflow: hidden;
         }
-        
+
         .container {
             position: relative;
             width: 300px;
             height: 400px;
             perspective: 1000px;
         }
-        
+
         .envelope {
             position: absolute;
             width: 100%;
@@ -32,35 +32,31 @@
             transition: transform 1.5s;
             z-index: 10;
         }
-        
-        .envelope-front {
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            background-color: #ff7eb9;
-            border-radius: 10px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            flex-direction: column;
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
-            z-index: 15;
-            backface-visibility: hidden;
-        }
-        
+
+        .envelope-front,
         .envelope-back {
             position: absolute;
             width: 100%;
             height: 100%;
             background-color: #ff7eb9;
             border-radius: 10px;
-            transform: rotateY(180deg);
             box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
             backface-visibility: hidden;
-            overflow: hidden;
+        }
+
+        .envelope-front {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            z-index: 15;
+        }
+
+        .envelope-back {
+            transform: rotateY(180deg);
             z-index: 11;
         }
-        
+
         .envelope-flap {
             position: absolute;
             top: 0;
@@ -73,7 +69,7 @@
             z-index: 20;
             clip-path: polygon(0 0, 50% 50%, 100% 0);
         }
-        
+
         .card {
             position: absolute;
             width: 80%;
@@ -91,26 +87,26 @@
             justify-content: center;
             align-items: center;
             text-align: center;
-            transition: transform 1.5s;
-            z-index: 5;
+            transition: transform 1.5s, opacity 1s;
             opacity: 0;
             visibility: hidden;
+            z-index: 5;
         }
-        
+
         .message {
             font-size: 16px;
             line-height: 1.5;
             color: #333;
             margin-top: 20px;
         }
-        
+
         .signature {
             margin-top: 30px;
             font-style: italic;
             font-weight: bold;
             color: #ff5c8d;
         }
-        
+
         .details {
             position: absolute;
             text-align: center;
@@ -118,28 +114,10 @@
             font-size: 18px;
             font-weight: bold;
             text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
-            transform: translateY(0);
             opacity: 0;
             transition: opacity 1s;
         }
-        
-        .floating-heart {
-            position: absolute;
-            color: #ff5c8d;
-            font-size: 20px;
-            animation: float 3s infinite ease-in-out;
-            opacity: 0;
-        }
-        
-        @keyframes float {
-            0%, 100% {
-                transform: translateY(0);
-            }
-            50% {
-                transform: translateY(-20px);
-            }
-        }
-        
+
         .hearts-container {
             position: absolute;
             width: 100%;
@@ -147,7 +125,7 @@
             pointer-events: none;
             z-index: 1;
         }
-        
+
         .heart {
             position: absolute;
             width: 20px;
@@ -155,9 +133,9 @@
             background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="%23ff5c8d"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>') no-repeat center center;
             background-size: contain;
             opacity: 0;
-            animation: heartFloat 5s infinite ease-in-out;
+            animation: heartFloat 5s ease-in-out forwards;
         }
-        
+
         @keyframes heartFloat {
             0% {
                 transform: translateY(400px) scale(0.5);
@@ -174,7 +152,7 @@
                 opacity: 0;
             }
         }
-        
+
         button {
             position: absolute;
             bottom: 50px;
@@ -190,12 +168,12 @@
             transition: all 0.3s;
             z-index: 30;
         }
-        
+
         button:hover {
             transform: translateY(-3px);
             box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
         }
-        
+
         button:active {
             transform: translateY(-1px);
             box-shadow: 0 3px 10px rgba(0, 0, 0, 0.2);
@@ -216,57 +194,55 @@
         <div class="envelope-flap" id="flap"></div>
         <div class="card" id="card">
             <h1>¡Feliz Día de las Madres!</h1>
-            <div class="message"><br><br>
-                Mamá, no hay palabras suficientes para agradecerte todo lo que has hecho por mí. Tu amor incondicional, tu fuerza y tu sabiduría son un regalo que valoro cada día. Eres mi ejemplo, mi refugio y mi mayor bendición. Hoy celebro tu vida y todo lo que significas para mí. ¡Feliz Día de las Madres!
+            <div class="message">
+                Querida mamá,<br><br>
+                Eres el ángel que ilumina mi camino, la fuerza que me anima a seguir adelante y el amor que me hace ser mejor persona cada día.<br><br>
+                Gracias por tus abrazos que curan cualquier dolor, por tus consejos que me guían, por tu paciencia infinita y por tu amor incondicional.<br><br>
+                En este día tan especial, quiero recordarte lo extraordinaria que eres y lo afortunado que soy de tenerte como mi madre.<br><br>
+                Te amo infinitamente.
             </div>
             <div class="signature">
-                Con todo mi amor,<br>
-                Tu hijo
+                Con todo mi amor,<br>Tu hijo
             </div>
         </div>
     </div>
-    
+
     <button id="open-button">Abrir Tarjeta</button>
-    
+
     <script>
-        document.addEventListener('DOMContentLoaded', function() {
+        document.addEventListener('DOMContentLoaded', function () {
             const envelope = document.getElementById('envelope');
             const flap = document.getElementById('flap');
             const card = document.getElementById('card');
             const details = document.getElementById('details');
             const openButton = document.getElementById('open-button');
             const heartsContainer = document.getElementById('hearts-container');
-            
-            // Initial animation - only show details
+
             setTimeout(() => {
                 details.style.opacity = '1';
             }, 1000);
-            
-            openButton.addEventListener('click', function() {
-                // Hide the button
+
+            openButton.addEventListener('click', function () {
                 this.style.opacity = '0';
                 this.style.pointerEvents = 'none';
-                
-                // Open the envelope
+
                 setTimeout(() => {
                     envelope.style.transform = 'rotateY(180deg)';
-                    
+
                     setTimeout(() => {
                         flap.style.transform = 'rotateX(-180deg)';
-                        
+
                         setTimeout(() => {
-                            // Show and move the card
                             card.style.visibility = 'visible';
                             card.style.opacity = '1';
                             card.style.transform = 'translate(-50%, -180%)';
-                            
-                            // Create hearts
+
                             createHearts();
                         }, 1000);
                     }, 1500);
                 }, 500);
             });
-            
+
             function createHearts() {
                 for (let i = 0; i < 20; i++) {
                     setTimeout(() => {
@@ -275,10 +251,9 @@
                         heart.style.left = Math.random() * 100 + '%';
                         heart.style.animationDelay = Math.random() * 2 + 's';
                         heartsContainer.appendChild(heart);
-                        
-                        // Remove the heart after animation completes
+
                         setTimeout(() => {
-                            heartsContainer.removeChild(heart);
+                            heart.remove();
                         }, 5000);
                     }, i * 300);
                 }
