@@ -1,9 +1,9 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    <title>Tarjeta para el Día de las Madres</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Feliz Día de las Madres</title>
     <style>
         body {
             margin: 0;
@@ -12,14 +12,15 @@
             justify-content: center;
             align-items: center;
             min-height: 100vh;
-            background-color: #ffdeeb;
+            background-color: #ffebee;
             font-family: 'Arial', sans-serif;
+            overflow: hidden;
         }
 
-        .container {
+        .scene {
             position: relative;
-            width: 320px;
-            height: 450px;
+            width: 350px;
+            height: 500px;
             perspective: 1000px;
         }
 
@@ -28,17 +29,17 @@
             width: 100%;
             height: 100%;
             transform-style: preserve-3d;
-            transition: transform 1.5s;
-            z-index: 10;
+            transition: all 1s ease-in-out;
+            transform: translateY(100vh);
         }
 
         .envelope-front, .envelope-back {
             position: absolute;
             width: 100%;
             height: 100%;
-            background-color: #ff7eb9;
+            background: linear-gradient(45deg, #ff5c8d, #ff7eb9);
             border-radius: 10px;
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+            box-shadow: 0 5px 20px rgba(0,0,0,0.2);
             backface-visibility: hidden;
         }
 
@@ -60,7 +61,7 @@
             left: 0;
             width: 100%;
             height: 50%;
-            background-color: #ff5c8d;
+            background: linear-gradient(45deg, #ff3a75, #ff5c8d);
             transform-origin: top;
             transition: transform 1s;
             z-index: 3;
@@ -68,154 +69,175 @@
             backface-visibility: hidden;
         }
 
+        .sender {
+            color: white;
+            font-size: 18px;
+            font-weight: bold;
+            text-align: center;
+            text-shadow: 1px 1px 3px rgba(0,0,0,0.3);
+            opacity: 0;
+            transition: opacity 0.5s;
+        }
+
         .card {
             position: absolute;
             width: 90%;
-            height: 85%;
-            background-color: white;
-            border-radius: 5px;
+            height: 90%;
+            background: white;
+            border-radius: 8px;
             left: 50%;
             top: 50%;
-            transform: translate(-50%, -50%) scale(0.95);
-            padding: 15px;
+            transform: translate(-50%, -50%) scale(0.9);
+            padding: 20px;
             box-sizing: border-box;
-            display: flex;
-            flex-direction: column;
-            text-align: center;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
             opacity: 0;
             visibility: hidden;
-            transition: all 1.5s;
-            z-index: 0;
-            overflow: hidden;
-        }
-
-        .card-content {
+            transition: all 1s;
             overflow-y: auto;
-            height: 100%;
-            padding-right: 5px;
         }
 
         .card h1 {
-            font-size: 22px;
             color: #ff5c8d;
-            margin-bottom: 15px;
+            text-align: center;
+            margin-bottom: 20px;
         }
 
         .message {
-            font-size: 14px;
-            line-height: 1.5;
-            color: #333;
+            font-size: 15px;
+            line-height: 1.6;
+            color: #555;
             text-align: justify;
-            margin-bottom: 15px;
+            margin-bottom: 20px;
         }
 
         .signature {
             font-style: italic;
-            font-weight: bold;
             color: #ff5c8d;
-            margin-top: auto;
+            font-weight: bold;
             text-align: right;
+            margin-top: 30px;
         }
 
-        .details {
-            color: white;
-            font-size: 16px;
-            font-weight: bold;
-            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
-            text-align: center;
-        }
-
-        button {
+        .hearts {
             position: absolute;
-            bottom: 30px;
-            padding: 12px 25px;
-            background-color: #ff5c8d;
-            color: white;
-            border: none;
-            border-radius: 25px;
-            font-size: 16px;
-            font-weight: bold;
-            cursor: pointer;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
-            z-index: 20;
-            transition: all 0.3s;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 10;
         }
 
-        button:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+        .heart {
+            position: absolute;
+            opacity: 0;
+            font-size: 20px;
+            color: #ff5c8d;
+            animation: float 5s ease-in infinite;
         }
 
-        /* Scrollbar styling */
-        .card-content::-webkit-scrollbar {
-            width: 4px;
-        }
-
-        .card-content::-webkit-scrollbar-track {
-            background: #f1f1f1;
-        }
-
-        .card-content::-webkit-scrollbar-thumb {
-            background: #ff7eb9;
-            border-radius: 2px;
+        @keyframes float {
+            0% {
+                transform: translateY(0) rotate(0deg);
+                opacity: 0;
+            }
+            10% {
+                opacity: 1;
+            }
+            90% {
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(-300px) rotate(360deg);
+                opacity: 0;
+            }
         }
     </style>
 </head>
 <body>
-    <div class="container">
+    <div class="scene">
+        <div class="hearts" id="hearts"></div>
         <div class="envelope" id="envelope">
             <div class="envelope-front">
-                <div class="details">
-                    De: Tu hijo<br>Para: Mi Mamá
-                </div>
+                <div class="sender" id="sender">De: Tu hijo<br>Para: Mi mamá</div>
             </div>
             <div class="envelope-back"></div>
+            <div class="envelope-flap" id="flap"></div>
         </div>
-        <div class="envelope-flap" id="flap"></div>
         <div class="card" id="card">
-            <div class="card-content">
-                <h1>¡Feliz Día de las Madres!</h1>
-                <div class="message">
-                    Mamá, no hay palabras suficientes para agradecerte todo lo que has hecho por mí. Tu amor incondicional, tu fuerza y tu sabiduría son un regalo que valoro cada día. Eres mi ejemplo, mi refugio y mi mayor bendición. Hoy celebro tu vida y todo lo que significas para mí.<br><br>
-                    Gracias por cada sacrificio, por cada consejo y por cada abrazo que me has dado. Eres la persona más importante en mi vida y quiero que sepas que te aprecio más de lo que las palabras pueden expresar.<br><br>
-                    Que este día esté lleno de alegría, amor y todo lo maravilloso que mereces. ¡Feliz Día de las Madres!
-                </div>
-                <div class="signature">
-                    Con todo mi amor,<br>Tu hijo
-                </div>
+            <h1>¡Feliz Día de las Madres!</h1>
+            <div class="message">
+                Mamá,<br><br>
+                En este día tan especial quiero decirte que eres la persona más importante en mi vida. Tu amor incondicional, tu paciencia infinita y tu fuerza son mi mayor inspiración.<br><br>
+                Gracias por estar siempre a mi lado, por tus abrazos que lo curan todo, por tus consejos llenos de sabiduría y por tu sonrisa que ilumina mis días.<br><br>
+                Hoy y siempre celebro tenerte en mi vida. Eres mi ejemplo a seguir, mi refugio seguro y mi mayor bendición. Espero poder hacerte sentir tan especial como tú me haces sentir cada día.<br><br>
+                Te amo con todo mi corazón.
+            </div>
+            <div class="signature">
+                Con todo mi amor,<br>Tu hijo
             </div>
         </div>
     </div>
-
-    <button id="open-button">Abrir Tarjeta</button>
 
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             const envelope = document.getElementById('envelope');
             const flap = document.getElementById('flap');
             const card = document.getElementById('card');
-            const openButton = document.getElementById('open-button');
+            const sender = document.getElementById('sender');
+            const hearts = document.getElementById('hearts');
 
-            openButton.addEventListener('click', function() {
-                // Ocultar botón
-                this.style.opacity = '0';
-                this.style.pointerEvents = 'none';
+            // Secuencia de animación
+            setTimeout(() => {
+                // Sube el sobre
+                envelope.style.transform = 'translateY(0)';
                 
-                // Girar el sobre
-                envelope.style.transform = 'rotateY(180deg)';
-                
-                // Después de girar, abrir la solapa
+                // Muestra el remitente
                 setTimeout(() => {
-                    flap.style.transform = 'rotateX(180deg)';
+                    sender.style.opacity = '1';
                     
-                    // Mostrar la tarjeta
+                    // Gira el sobre
                     setTimeout(() => {
-                        card.style.visibility = 'visible';
-                        card.style.opacity = '1';
-                        card.style.transform = 'translate(-50%, -50%) scale(1)';
-                    }, 500);
+                        envelope.style.transform = 'translateY(0) rotateY(180deg)';
+                        
+                        // Abre la solapa
+                        setTimeout(() => {
+                            flap.style.transform = 'rotateX(180deg)';
+                            
+                            // Muestra la carta
+                            setTimeout(() => {
+                                card.style.visibility = 'visible';
+                                card.style.opacity = '1';
+                                card.style.transform = 'translate(-50%, -50%) scale(1)';
+                                
+                                // Crear corazones flotantes
+                                createHearts();
+                            }, 1000);
+                        }, 1000);
+                    }, 2000);
                 }, 1000);
-            });
+            }, 500);
+
+            function createHearts() {
+                const heartSymbols = ['❤️', '💖', '💗', '💓', '💞'];
+                
+                for (let i = 0; i < 15; i++) {
+                    setTimeout(() => {
+                        const heart = document.createElement('div');
+                        heart.className = 'heart';
+                        heart.innerHTML = heartSymbols[Math.floor(Math.random() * heartSymbols.length)];
+                        heart.style.left = Math.random() * 100 + '%';
+                        heart.style.fontSize = (Math.random() * 20 + 15) + 'px';
+                        heart.style.animationDuration = (Math.random() * 3 + 4) + 's';
+                        heart.style.animationDelay = Math.random() * 2 + 's';
+                        hearts.appendChild(heart);
+                        
+                        // Eliminar después de la animación
+                        setTimeout(() => {
+                            heart.remove();
+                        }, 6000);
+                    }, i * 300);
+                }
+            }
         });
     </script>
 </body>
