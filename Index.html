@@ -19,8 +19,8 @@
 
         .container {
             position: relative;
-            width: 300px;
-            height: 400px;
+            width: 350px;
+            height: 500px;
             perspective: 1000px;
         }
 
@@ -68,17 +68,18 @@
             transition: transform 1s;
             z-index: 20;
             clip-path: polygon(0 0, 50% 50%, 100% 0);
+            backface-visibility: hidden;
         }
 
         .card {
             position: absolute;
-            width: 80%;
-            height: 90%;
+            width: 90%;
+            height: 110%;
             background-color: white;
             border-radius: 5px;
             left: 50%;
             top: 50%;
-            transform: translate(-50%, -50%);
+            transform: translate(-50%, -50%) scale(0.9);
             box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
             padding: 20px;
             box-sizing: border-box;
@@ -91,20 +92,30 @@
             opacity: 0;
             visibility: hidden;
             z-index: 5;
+            overflow-y: auto;
+        }
+
+        .card h1 {
+            font-size: 24px;
+            color: #ff5c8d;
+            margin-bottom: 20px;
         }
 
         .message {
             font-size: 16px;
-            line-height: 1.5;
+            line-height: 1.6;
             color: #333;
-            margin-top: 20px;
+            margin: 15px 0;
+            text-align: justify;
+            padding: 0 10px;
         }
 
         .signature {
-            margin-top: 30px;
+            margin-top: 20px;
             font-style: italic;
             font-weight: bold;
             color: #ff5c8d;
+            align-self: flex-end;
         }
 
         .details {
@@ -178,6 +189,25 @@
             transform: translateY(-1px);
             box-shadow: 0 3px 10px rgba(0, 0, 0, 0.2);
         }
+
+        /* Scrollbar styling for card */
+        .card::-webkit-scrollbar {
+            width: 5px;
+        }
+
+        .card::-webkit-scrollbar-track {
+            background: #f1f1f1;
+            border-radius: 10px;
+        }
+
+        .card::-webkit-scrollbar-thumb {
+            background: #ff7eb9;
+            border-radius: 10px;
+        }
+
+        .card::-webkit-scrollbar-thumb:hover {
+            background: #ff5c8d;
+        }
     </style>
 </head>
 <body>
@@ -195,7 +225,9 @@
         <div class="card" id="card">
             <h1>¡Feliz Día de las Madres!</h1>
             <div class="message">
-                Mamá, no hay palabras suficientes para agradecerte todo lo que has hecho por mí. Tu amor incondicional, tu fuerza y tu sabiduría son un regalo que valoro cada día. Eres mi ejemplo, mi refugio y mi mayor bendición. Hoy celebro tu vida y todo lo que significas para mí. ¡Feliz Día de las Madres!"<br><br>
+                Mamá, no hay palabras suficientes para agradecerte todo lo que has hecho por mí. Tu amor incondicional, tu fuerza y tu sabiduría son un regalo que valoro cada día. Eres mi ejemplo, mi refugio y mi mayor bendición. Hoy celebro tu vida y todo lo que significas para mí. ¡Feliz Día de las Madres!<br><br>
+                Gracias por cada sacrificio, por cada consejo y por cada abrazo que me has dado. Eres la persona más importante en mi vida y quiero que sepas que te aprecio más de lo que las palabras pueden expresar.<br><br>
+                Que este día esté lleno de alegría, amor y todo lo maravilloso que mereces. Espero poder devolverte aunque sea una pequeña parte de todo el amor que me has dado.<br><br>
                 Te amo infinitamente.
             </div>
             <div class="signature">
@@ -232,7 +264,7 @@
                         setTimeout(() => {
                             card.style.visibility = 'visible';
                             card.style.opacity = '1';
-                            card.style.transform = 'translate(-50%, -180%)';
+                            card.style.transform = 'translate(-50%, -50%) scale(1)';
 
                             createHearts();
                         }, 1000);
